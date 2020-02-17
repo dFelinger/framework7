@@ -314,7 +314,7 @@ function SwipeBack(r) {
 
       // Page before animation callback
       router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route, swipeBack: true });
-      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true });
+      router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true }, currentPage[0]);
 
       $el.trigger('swipeback:beforechange', callbackData);
       router.emit('swipebackBeforeChange', callbackData);

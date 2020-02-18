@@ -7,6 +7,8 @@ export default {
     popup: {
       backdrop: true,
       closeByBackdropClick: true,
+      swipeToClose: false,
+      swipeToCloseHandler: null,
     },
   },
   static: {

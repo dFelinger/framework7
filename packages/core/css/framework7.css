@@ -3,11 +3,11 @@
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2019 Vladimir Kharlampidi
+ * Copyright 2014-2020 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: February 13, 2019
+ * Released on: May 21, 2020
  */
 html,
 body,
@@ -7894,6 +7894,10 @@ input[type="button"].md .dialog-button {
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
 }
+.popup.swipe-close-to-top.modal-out {
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
+}
 @media (min-width: 630px) and (min-height: 630px) {
   .popup:not(.popup-tablet-fullscreen) {
     width: 630px;
@@ -7912,6 +7916,10 @@ input[type="button"].md .dialog-button {
   .popup:not(.popup-tablet-fullscreen).modal-out {
     -webkit-transform: translate3d(0, 100vh, 0);
     transform: translate3d(0, 100vh, 0);
+  }
+  .popup:not(.popup-tablet-fullscreen).swipe-close-to-top.modal-out {
+    -webkit-transform: translate3d(0, -100vh, 0);
+    transform: translate3d(0, -100vh, 0);
   }
 }
 @media (max-width: 629px), (max-height: 629px) {

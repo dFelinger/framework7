@@ -3,11 +3,11 @@
  * Build full featured iOS & Android apps using Framework7 & React
  * http://framework7.io/react/
  *
- * Copyright 2014-2019 Vladimir Kharlampidi
+ * Copyright 2014-2020 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: February 13, 2019
+ * Released on: May 21, 2020
  */
 
 import F7AccordionContent from './components/accordion-content';

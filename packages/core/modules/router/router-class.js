@@ -896,6 +896,19 @@ class Router extends Framework7Class {
       router
         .xhrRequest(url, options)
         .then((loadedComponent) => {
+          if (options.decrypt && window.decryptComponent) {
+            return Utils.promise((resolveDecrypt, rejectDecrypt) => {
+              window.decryptComponent(loadedComponent, (decryptedComponent) => {
+                resolveDecrypt(decryptedComponent);
+              }, (error) => {
+                rejectDecrypt(error);
+              });
+            });
+          }
+
+          return loadedComponent;
+        })
+        .then((loadedComponent) => {
           const parsedComponent = app.component.parse(loadedComponent);
           router.cache.components.push({
             url: compiledUrl,

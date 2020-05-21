@@ -3,11 +3,11 @@
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2019 Vladimir Kharlampidi
+ * Copyright 2014-2020 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: February 13, 2019
+ * Released on: May 21, 2020
  */
 
 (function (global, factory) {
@@ -5637,7 +5637,7 @@
 
         // Page before animation callback
         router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route, swipeBack: true });
-        router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true });
+        router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true }, currentPage[0]);
 
         $el.trigger('swipeback:beforechange', callbackData);
         router.emit('swipebackBeforeChange', callbackData);
@@ -8600,6 +8600,19 @@
         }
         router
           .xhrRequest(url, options)
+          .then(function (loadedComponent) {
+            if (options.decrypt && win.decryptComponent) {
+              return Utils.promise(function (resolveDecrypt, rejectDecrypt) {
+                win.decryptComponent(loadedComponent, function (decryptedComponent) {
+                  resolveDecrypt(decryptedComponent);
+                }, function (error) {
+                  rejectDecrypt(error);
+                });
+              });
+            }
+
+            return loadedComponent;
+          })
           .then(function (loadedComponent) {
             var parsedComponent = app.component.parse(loadedComponent);
             router.cache.components.push({
@@ -12636,7 +12649,9 @@
       }
 
       var $backdropEl;
-      if (popup.params.backdrop) {
+      if (popup.params.backdrop && popup.params.backdropEl) {
+        $backdropEl = $(popup.params.backdropEl);
+      } else if (popup.params.backdrop) {
         $backdropEl = app.root.children('.popup-backdrop');
         if ($backdropEl.length === 0) {
           $backdropEl = $('<div class="popup-backdrop"></div>');
@@ -12656,6 +12671,8 @@
       function handleClick(e) {
         var target = e.target;
         var $target = $(target);
+        var keyboardOpened = !app.device.desktop && app.device.cordova && ((window.Keyboard && window.Keyboard.isVisible) || (window.cordova.plugins && window.cordova.plugins.Keyboard && window.cordova.plugins.Keyboard.isVisible));
+        if (keyboardOpened) { return; }
         if ($target.closest(popup.el).length === 0) {
           if (
             popup.params
@@ -12683,7 +12700,23 @@
         }
       }
 
+      function onKeyDown(e) {
+        var keyCode = e.keyCode;
+        if (keyCode === 27 && popup.params.closeOnEscape) {
+          popup.close();
+        }
+      }
+      if (popup.params.closeOnEscape) {
+        popup.on('popupOpen', function () {
+          $(document).on('keydown', onKeyDown);
+        });
+        popup.on('popupClose', function () {
+          $(document).off('keydown', onKeyDown);
+        });
+      }
+
       popup.on('popupOpened', function () {
+        $el.removeClass('swipe-close-to-bottom swipe-close-to-top');
         if (popup.params.closeByBackdropClick) {
           app.on('click', handleClick);
         }
@@ -12693,6 +12726,127 @@
           app.off('click', handleClick);
         }
       });
+
+      var allowSwipeToClose = true;
+      var isTouched = false;
+      var startTouch;
+      var currentTouch;
+      var isScrolling;
+      var touchStartTime;
+      var touchesDiff;
+      var isMoved = false;
+      var pageContentEl;
+      var pageContentScrollTop;
+      var pageContentOffsetHeight;
+      var pageContentScrollHeight;
+
+      function handleTouchStart(e) {
+        if (isTouched || !allowSwipeToClose) { return; }
+        if (popup.params.swipeToCloseHandler && $(e.target).closest(popup.params.swipeToCloseHandler).length === 0) {
+          return;
+        }
+        isTouched = true;
+        isMoved = false;
+        startTouch = {
+          x: e.type === 'touchstart' ? e.targetTouches[0].pageX : e.pageX,
+          y: e.type === 'touchstart' ? e.targetTouches[0].pageY : e.pageY,
+        };
+        touchStartTime = Utils.now();
+        isScrolling = undefined;
+        if (!popup.params.swipeToCloseHandler && e.type === 'touchstart') {
+          pageContentEl = $(e.target).closest('.page-content')[0];
+        }
+      }
+      function handleTouchMove(e) {
+        if (!isTouched) { return; }
+        currentTouch = {
+          x: e.type === 'touchmove' ? e.targetTouches[0].pageX : e.pageX,
+          y: e.type === 'touchmove' ? e.targetTouches[0].pageY : e.pageY,
+        };
+
+        if (typeof isScrolling === 'undefined') {
+          isScrolling = !!(isScrolling || Math.abs(currentTouch.x - startTouch.x) > Math.abs(currentTouch.y - startTouch.y));
+        }
+        if (isScrolling) {
+          isTouched = false;
+          isMoved = false;
+          return;
+        }
+
+        touchesDiff = startTouch.y - currentTouch.y;
+        var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
+        $el.transition(0);
+
+        if (typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose) {
+          $el.transform('');
+          return;
+        }
+
+        if (!isMoved) {
+          if (pageContentEl) {
+            pageContentScrollTop = pageContentEl.scrollTop;
+            pageContentScrollHeight = pageContentEl.scrollHeight;
+            pageContentOffsetHeight = pageContentEl.offsetHeight;
+            if (
+              !(pageContentScrollHeight === pageContentOffsetHeight)
+              && !(direction === 'to-bottom' && pageContentScrollTop === 0)
+              && !(direction === 'to-top' && pageContentScrollTop === (pageContentScrollHeight - pageContentOffsetHeight))
+            ) {
+              $el.transform('');
+              isTouched = false;
+              isMoved = false;
+              return;
+            }
+          }
+          isMoved = true;
+        }
+        e.preventDefault();
+        $el.transition(0).transform(("translate3d(0," + (-touchesDiff) + "px,0)"));
+      }
+      function handleTouchEnd() {
+        isTouched = false;
+        if (!isMoved) {
+          return;
+        }
+        isMoved = false;
+        allowSwipeToClose = false;
+        $el.transition('');
+        var direction = touchesDiff < 0 ? 'to-bottom' : 'to-top';
+        if ((typeof popup.params.swipeToClose === 'string' && direction !== popup.params.swipeToClose)) {
+          $el.transform('');
+          allowSwipeToClose = true;
+          return;
+        }
+        var diff = Math.abs(touchesDiff);
+        var timeDiff = (new Date()).getTime() - touchStartTime;
+        if ((timeDiff < 300 && diff > 20) || (timeDiff >= 300 && diff > 100)) {
+          Utils.nextTick(function () {
+            if (direction === 'to-bottom') {
+              $el.addClass('swipe-close-to-bottom');
+            } else {
+              $el.addClass('swipe-close-to-top');
+            }
+            $el.transform('');
+            popup.close();
+            allowSwipeToClose = true;
+          });
+          return;
+        }
+        allowSwipeToClose = true;
+        $el.transform('');
+      }
+
+      var passive = Support.passiveListener ? { passive: true } : false;
+      if (popup.params.swipeToClose) {
+        $el.on(app.touchEvents.start, handleTouchStart, passive);
+        app.on('touchmove', handleTouchMove);
+        app.on('touchend:passive', handleTouchEnd);
+        popup.once('popupDestroy', function () {
+          $el.off(app.touchEvents.start, handleTouchStart, passive);
+          app.off('touchmove', handleTouchMove);
+          app.off('touchend:passive', handleTouchEnd);
+        });
+      }
 
       $el[0].f7Modal = popup;
 
@@ -12712,6 +12866,8 @@
       popup: {
         backdrop: true,
         closeByBackdropClick: true,
+        swipeToClose: false,
+        swipeToCloseHandler: null,
       },
     },
     static: {

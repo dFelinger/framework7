@@ -3,11 +3,11 @@
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2019 Vladimir Kharlampidi
+ * Copyright 2014-2020 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: February 13, 2019
+ * Released on: May 21, 2020
  */
 
 (function (global, factory) {
@@ -5637,7 +5637,7 @@
 
         // Page before animation callback
         router.pageCallback('beforeOut', currentPage, currentNavbar, 'current', 'next', { route: currentPage[0].f7Page.route, swipeBack: true });
-        router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true });
+        router.pageCallback('beforeIn', previousPage, previousNavbar, 'previous', 'current', { route: previousPage[0].f7Page.route, swipeBack: true }, currentPage[0]);
 
         $el.trigger('swipeback:beforechange', callbackData);
         router.emit('swipebackBeforeChange', callbackData);
@@ -8600,6 +8600,19 @@
         }
         router
           .xhrRequest(url, options)
+          .then(function (loadedComponent) {
+            if (options.decrypt && win.decryptComponent) {
+              return Utils.promise(function (resolveDecrypt, rejectDecrypt) {
+                win.decryptComponent(loadedComponent, function (decryptedComponent) {
+                  resolveDecrypt(decryptedComponent);
+                }, function (error) {
+                  rejectDecrypt(error);
+                });
+              });
+            }
+
+            return loadedComponent;
+          })
           .then(function (loadedComponent) {
             var parsedComponent = app.component.parse(loadedComponent);
             router.cache.components.push({

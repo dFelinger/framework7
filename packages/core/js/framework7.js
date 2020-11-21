@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 21, 2020
+ * Released on: November 21, 2020
  */
 
 (function (global, factory) {
@@ -19584,7 +19584,7 @@
 
       var sheetParams = {
         content: sheetHtml,
-        backdrop: false,
+        backdrop: true,
         scrollToEl: ss.$el,
         closeByOutsideClick: true,
         on: {

@@ -4,6 +4,12 @@
 
 Full Featured Mobile HTML Framework For Building iOS & Android Apps
 
+## What's different
+  * Issue 3146 fix - Swipeback pageFrom data is undefined
+  * Encrypt page component promise
+  * Popup - add swipe-to-close feature like in 4.4.0 in commit fd988b909846dd2f8b9205e669fb8b3f37b7d927
+  * Smart select sheet enable backdrop
+  * Fix smart select data-option-color
 
 ## Supporting Framework7
 

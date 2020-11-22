@@ -6,8 +6,11 @@ import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispat
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-page',
-  props: Object.assign({
-    id: [String, Number],
+  props: {
+    id: [
+      String,
+      Number
+    ],
     name: String,
     stacked: Boolean,
     withSubnavbar: {
@@ -43,12 +46,11 @@ export default {
     hideNavbarOnScroll: Boolean,
     hideToolbarOnScroll: Boolean,
     messagesContent: Boolean,
-    loginScreen: Boolean
-  }, Mixins.colorProps),
-
+    loginScreen: Boolean,
+    ...Mixins.colorProps
+  },
   data() {
     const props = __vueComponentProps(this);
-
     const state = (() => {
       return {
         hasSubnavbar: false,
@@ -56,42 +58,13 @@ export default {
         routerForceUnstack: false
       };
     })();
-
-    return {
-      state
-    };
+    return { state };
   },
-
   render() {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {
-      id,
-      style,
-      name,
-      pageContent,
-      messagesContent,
-      ptr,
-      ptrDistance,
-      ptrPreloader,
-      infinite,
-      infiniteDistance,
-      infinitePreloader,
-      infiniteTop,
-      hideBarsOnScroll,
-      hideNavbarOnScroll,
-      hideToolbarOnScroll,
-      loginScreen,
-      className,
-      stacked,
-      tabs,
-      subnavbar,
-      withSubnavbar,
-      noNavbar,
-      noToolbar,
-      noSwipeback
-    } = props;
+    const {id, style, name, pageContent, messagesContent, ptr, ptrDistance, ptrPreloader, infinite, infiniteDistance, infinitePreloader, infiniteTop, hideBarsOnScroll, hideNavbarOnScroll, hideToolbarOnScroll, loginScreen, className, stacked, tabs, subnavbar, withSubnavbar, noNavbar, noToolbar, noSwipeback} = props;
     const fixedList = [];
     const staticList = [];
     const needsPageContent = pageContent;
@@ -105,35 +78,36 @@ export default {
     let hasSubnavbar;
     let hasMessages;
     hasMessages = self.$options.propsData.messagesContent;
-
     if (slotsDefault) {
       slotsDefault.forEach(child => {
-        if (typeof child === 'undefined') return;
+        if (typeof child === 'undefined')
+          return;
         let isFixedTag = false;
         {
           const tag = child.tag;
-
           if (!tag) {
-            if (needsPageContent) staticList.push(child);
+            if (needsPageContent)
+              staticList.push(child);
             return;
           }
-
-          if (tag.indexOf('subnavbar') >= 0) hasSubnavbar = true;
-          if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0) hasMessages = true;
-
+          if (tag.indexOf('subnavbar') >= 0)
+            hasSubnavbar = true;
+          if (typeof hasMessages === 'undefined' && tag.indexOf('messages') >= 0)
+            hasMessages = true;
           for (let j = 0; j < fixedTags.length; j += 1) {
             if (tag.indexOf(fixedTags[j]) >= 0) {
               isFixedTag = true;
             }
           }
         }
-
         if (needsPageContent) {
-          if (isFixedTag) fixedList.push(child);else staticList.push(child);
+          if (isFixedTag)
+            fixedList.push(child);
+          else
+            staticList.push(child);
         }
       });
     }
-
     const forceSubnavbar = typeof subnavbar === 'undefined' && typeof withSubnavbar === 'undefined' ? hasSubnavbar || this.state.hasSubnavbar : false;
     const classes = Utils.classNames(className, 'page', this.state.routerClass, {
       stacked: stacked && !this.state.routerForceUnstack,
@@ -143,7 +117,6 @@ export default {
       'no-toolbar': noToolbar,
       'no-swipeback': noSwipeback
     }, Mixins.colorClasses(props));
-
     if (!needsPageContent) {
       return _h('div', {
         ref: 'el',
@@ -153,9 +126,12 @@ export default {
           id: id,
           'data-name': name
         }
-      }, [slotsFixed, slotsStatic, slotsDefault]);
+      }, [
+        slotsFixed,
+        slotsStatic,
+        slotsDefault
+      ]);
     }
-
     const pageContentEl = _h(F7PageContent, {
       attrs: {
         ptr: ptr,
@@ -171,8 +147,10 @@ export default {
         messagesContent: messagesContent || hasMessages,
         loginScreen: loginScreen
       }
-    }, [slotsStatic, staticList]);
-
+    }, [
+      slotsStatic,
+      staticList
+    ]);
     return _h('div', {
       ref: 'el',
       style: style,
@@ -181,16 +159,16 @@ export default {
         id: id,
         'data-name': name
       }
-    }, [fixedList, slotsFixed, pageContentEl]);
+    }, [
+      fixedList,
+      slotsFixed,
+      pageContentEl
+    ]);
   },
-
   mounted() {
     const self = this;
     const el = self.$refs.el;
-    const {
-      ptr,
-      infinite
-    } = self.props;
+    const {ptr, infinite} = self.props;
     self.onPtrPullStart = self.onPtrPullStart.bind(self);
     self.onPtrPullMove = self.onPtrPullMove.bind(self);
     self.onPtrPullEnd = self.onPtrPullEnd.bind(self);
@@ -208,7 +186,6 @@ export default {
     self.onPageStack = self.onPageStack.bind(self);
     self.onPageUnstack = self.onPageUnstack.bind(self);
     self.onPagePosition = self.onPagePosition.bind(self);
-
     if (ptr) {
       el.addEventListener('ptr:pullstart', self.onPtrPullStart);
       el.addEventListener('ptr:pullmove', self.onPtrPullMove);
@@ -216,11 +193,9 @@ export default {
       el.addEventListener('ptr:refresh', self.onPtrRefresh);
       el.addEventListener('ptr:done', self.onPtrDone);
     }
-
     if (infinite) {
       el.addEventListener('infinite', self.onInfinite);
     }
-
     el.addEventListener('page:mounted', self.onPageMounted);
     el.addEventListener('page:init', self.onPageInit);
     el.addEventListener('page:reinit', self.onPageReinit);
@@ -233,7 +208,6 @@ export default {
     el.addEventListener('page:unstack', self.onPageUnstack);
     el.addEventListener('page:position', self.onPagePosition);
   },
-
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
@@ -255,147 +229,97 @@ export default {
     el.removeEventListener('page:unstack', self.onPageUnstack);
     el.removeEventListener('page:position', self.onPagePosition);
   },
-
   methods: {
     onPtrPullStart(event) {
       this.dispatchEvent('ptr:pullstart ptrPullStart', event);
     },
-
     onPtrPullMove(event) {
       this.dispatchEvent('ptr:pullmove ptrPullMove', event);
     },
-
     onPtrPullEnd(event) {
       this.dispatchEvent('ptr:pullend ptrPullEnd', event);
     },
-
     onPtrRefresh(event) {
       const done = event.detail;
       this.dispatchEvent('ptr:refresh ptrRefresh', event, done);
     },
-
     onPtrDone(event) {
       this.dispatchEvent('ptr:done ptrDone', event);
     },
-
     onInfinite(event) {
       this.dispatchEvent('infinite', event);
     },
-
     onPageMounted(event) {
       const page = event.detail;
       this.dispatchEvent('page:mounted pageMounted', event, page);
     },
-
     onPageStack() {
-      this.setState({
-        routerForceUnstack: false
-      });
+      this.setState({ routerForceUnstack: false });
     },
-
     onPageUnstack() {
-      this.setState({
-        routerForceUnstack: true
-      });
+      this.setState({ routerForceUnstack: true });
     },
-
     onPagePosition(event) {
       const position = event.detail.position;
-      this.setState({
-        routerClass: `page-${position}`
-      });
+      this.setState({ routerClass: `page-${ position }` });
     },
-
     onPageInit(event) {
       const page = event.detail;
-      const {
-        withSubnavbar,
-        subnavbar
-      } = this.props;
-
+      const {withSubnavbar, subnavbar} = this.props;
       if (typeof withSubnavbar === 'undefined' && typeof subnavbar === 'undefined') {
         if (page.$navbarEl && page.$navbarEl.length && page.$navbarEl.find('.subnavbar').length || page.$el.children('.navbar').find('.subnavbar').length) {
-          this.setState({
-            hasSubnavbar: true
-          });
+          this.setState({ hasSubnavbar: true });
         }
       }
-
       this.dispatchEvent('page:init pageInit', event, page);
     },
-
     onPageReinit(event) {
       const page = event.detail;
       this.dispatchEvent('page:reinit pageReinit', event, page);
     },
-
     onPageBeforeIn(event) {
       const page = event.detail;
-
       if (page.from === 'next') {
-        this.setState({
-          routerClass: 'page-next'
-        });
+        this.setState({ routerClass: 'page-next' });
       }
-
       if (page.from === 'previous') {
-        this.setState({
-          routerClass: 'page-previous'
-        });
+        this.setState({ routerClass: 'page-previous' });
       }
-
       this.dispatchEvent('page:beforein pageBeforeIn', event, page);
     },
-
     onPageBeforeOut(event) {
       const page = event.detail;
       this.dispatchEvent('page:beforeout pageBeforeOut', event, page);
     },
-
     onPageAfterOut(event) {
       const page = event.detail;
-
       if (page.to === 'next') {
-        this.setState({
-          routerClass: 'page-next'
-        });
+        this.setState({ routerClass: 'page-next' });
       }
-
       if (page.to === 'previous') {
-        this.setState({
-          routerClass: 'page-previous'
-        });
+        this.setState({ routerClass: 'page-previous' });
       }
-
       this.dispatchEvent('page:afterout pageAfterOut', event, page);
     },
-
     onPageAfterIn(event) {
       const page = event.detail;
-      this.setState({
-        routerClass: 'page-current'
-      });
+      this.setState({ routerClass: 'page-current' });
       this.dispatchEvent('page:afterin pageAfterIn', event, page);
     },
-
     onPageBeforeRemove(event) {
       const page = event.detail;
       this.dispatchEvent('page:beforeremove pageBeforeRemove', event, page);
     },
-
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
     },
-
     setState(updater, callback) {
       __vueComponentSetState(this, updater, callback);
     }
-
   },
   computed: {
     props() {
       return __vueComponentProps(this);
     }
-
   }
 };

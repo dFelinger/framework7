@@ -6,15 +6,24 @@ import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispat
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-button',
-  props: Object.assign({
-    id: [String, Number],
+  props: {
+    id: [
+      String,
+      Number
+    ],
     noFastclick: Boolean,
     noFastClick: Boolean,
     text: String,
-    tabLink: [Boolean, String],
+    tabLink: [
+      Boolean,
+      String
+    ],
     tabLinkActive: Boolean,
     href: {
-      type: [String, Boolean],
+      type: [
+        String,
+        Boolean
+      ],
       default: '#'
     },
     target: String,
@@ -34,39 +43,24 @@ export default {
     outline: Boolean,
     active: Boolean,
     disabled: Boolean,
-    tooltip: String
-  }, Mixins.colorProps, Mixins.linkIconProps, Mixins.linkRouterProps, Mixins.linkActionsProps),
-
+    tooltip: String,
+    ...Mixins.colorProps,
+    ...Mixins.linkIconProps,
+    ...Mixins.linkRouterProps,
+    ...Mixins.linkActionsProps
+  },
   render() {
     const _h = this.$createElement;
     const self = this;
     let iconEl;
     let textEl;
     const props = self.props;
-    const {
-      text,
-      icon,
-      iconMaterial,
-      iconIon,
-      iconFa,
-      iconF7,
-      iconIfMd,
-      iconIfIos,
-      iconMd,
-      iconIos,
-      iconColor,
-      iconSize,
-      id,
-      style
-    } = props;
-
+    const {text, icon, iconMaterial, iconIon, iconFa, iconF7, iconIfMd, iconIfIos, iconMd, iconIos, iconColor, iconSize, id, style} = props;
     if (text) {
       textEl = _h('span', [text]);
     }
-
     const mdThemeIcon = iconIfMd || iconMd;
     const iosThemeIcon = iconIfIos || iconIos;
-
     if (icon || iconMaterial || iconIon || iconFa || iconF7 || mdThemeIcon || iosThemeIcon) {
       iconEl = _h(F7Icon, {
         attrs: {
@@ -82,63 +76,38 @@ export default {
         }
       });
     }
-
-    return _h('a', __vueComponentTransformJSXProps(Object.assign({
+    return _h('a', __vueComponentTransformJSXProps({
       ref: 'el',
       style: style,
-      class: self.classes
-    }, self.attrs, {
-      attrs: {
-        id: id
-      }
-    })), [iconEl, textEl, this.$slots['default']]);
+      class: self.classes,
+      ...self.attrs,
+      attrs: { id: id }
+    }), [
+      iconEl,
+      textEl,
+      this.$slots['default']
+    ]);
   },
-
   computed: {
     attrs() {
       const self = this;
       const props = self.props;
-      const {
-        href,
-        target,
-        tabLink
-      } = props;
+      const {href, target, tabLink} = props;
       let hrefComputed = href;
-      if (href === true) hrefComputed = '#';
-      if (href === false) hrefComputed = undefined;
+      if (href === true)
+        hrefComputed = '#';
+      if (href === false)
+        hrefComputed = undefined;
       return Utils.extend({
         href: hrefComputed,
         target,
         'data-tab': Utils.isStringProp(tabLink) && tabLink || undefined
       }, Mixins.linkRouterAttrs(props), Mixins.linkActionsAttrs(props));
     },
-
     classes() {
       const self = this;
       const props = self.props;
-      const {
-        noFastclick,
-        noFastClick,
-        tabLink,
-        tabLinkActive,
-        round,
-        roundIos,
-        roundMd,
-        fill,
-        fillIos,
-        fillMd,
-        big,
-        bigIos,
-        bigMd,
-        small,
-        smallIos,
-        smallMd,
-        raised,
-        active,
-        outline,
-        disabled,
-        className
-      } = props;
+      const {noFastclick, noFastClick, tabLink, tabLinkActive, round, roundIos, roundMd, fill, fillIos, fillMd, big, bigIos, bigMd, small, smallIos, smallMd, raised, active, outline, disabled, className} = props;
       return Utils.classNames(className, 'button', {
         'tab-link': tabLink || tabLink === '',
         'tab-link-active': tabLinkActive,
@@ -161,49 +130,40 @@ export default {
         disabled
       }, Mixins.colorClasses(props), Mixins.linkRouterClasses(props), Mixins.linkActionsClasses(props));
     },
-
     props() {
       return __vueComponentProps(this);
     }
-
   },
   methods: {
     onClick(event) {
       this.dispatchEvent('click', event);
     },
-
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
     }
-
   },
   watch: {
     'props.tooltip': function watchTooltip(newText) {
       const self = this;
-      if (!newText || !self.f7Tooltip) return;
+      if (!newText || !self.f7Tooltip)
+        return;
       self.f7Tooltip.setText(newText);
     }
   },
-
   created() {
     const self = this;
     self.onClickBound = self.onClick.bind(self);
   },
-
   mounted() {
     const self = this;
     const el = self.$refs.el;
     el.addEventListener('click', self.onClickBound);
-    const {
-      tooltip,
-      routeProps
-    } = self.props;
-
+    const {tooltip, routeProps} = self.props;
     if (routeProps) {
       el.f7RouteProps = routeProps;
     }
-
-    if (!tooltip) return;
+    if (!tooltip)
+      return;
     self.$f7ready(f7 => {
       self.f7Tooltip = f7.tooltip.create({
         targetEl: el,
@@ -211,30 +171,23 @@ export default {
       });
     });
   },
-
   updated() {
     const self = this;
     const el = self.$refs.el;
-    const {
-      routeProps
-    } = self.props;
-
+    const {routeProps} = self.props;
     if (routeProps) {
       el.f7RouteProps = routeProps;
     }
   },
-
   beforeDestroy() {
     const self = this;
     const el = self.$refs.el;
     el.removeEventListener('click', self.onClickBound);
     delete el.f7RouteProps;
-
     if (self.f7Tooltip && self.f7Tooltip.destroy) {
       self.f7Tooltip.destroy();
       self.f7Tooltip = null;
       delete self.f7Tooltip;
     }
   }
-
 };

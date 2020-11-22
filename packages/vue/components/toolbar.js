@@ -3,8 +3,11 @@ import Mixins from '../utils/mixins';
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-toolbar',
-  props: Object.assign({
-    id: [String, Number],
+  props: {
+    id: [
+      String,
+      Number
+    ],
     bottomMd: Boolean,
     tabbar: Boolean,
     labels: Boolean,
@@ -15,26 +18,14 @@ export default {
     inner: {
       type: Boolean,
       default: true
-    }
-  }, Mixins.colorProps),
-
+    },
+    ...Mixins.colorProps
+  },
   render() {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {
-      id,
-      style,
-      className,
-      inner,
-      bottomMd,
-      tabbar,
-      labels,
-      scrollable,
-      hidden,
-      noShadow,
-      noHairline
-    } = props;
+    const {id, style, className, inner, bottomMd, tabbar, labels, scrollable, hidden, noShadow, noHairline} = props;
     const classes = Utils.classNames(className, 'toolbar', {
       'toolbar-bottom-md': bottomMd,
       tabbar,
@@ -48,47 +39,43 @@ export default {
       style: style,
       ref: 'el',
       class: classes,
-      attrs: {
-        id: id
-      }
-    }, [this.$slots['before-inner'], inner ? _h('div', {
-      class: 'toolbar-inner'
-    }, [this.$slots['default']]) : this.$slots['default'], this.$slots['after-inner']]);
+      attrs: { id: id }
+    }, [
+      this.$slots['before-inner'],
+      inner ? _h('div', { class: 'toolbar-inner' }, [this.$slots['default']]) : this.$slots['default'],
+      this.$slots['after-inner']
+    ]);
   },
-
   updated() {
     const self = this;
-
     if (self.props.tabbar && self.$f7) {
       self.$f7.toolbar.setHighlight(self.$refs.el);
     }
   },
-
   mounted() {
     const self = this;
     self.$f7ready(f7 => {
-      if (self.props.tabbar) f7.toolbar.setHighlight(self.$refs.el);
+      if (self.props.tabbar)
+        f7.toolbar.setHighlight(self.$refs.el);
     });
   },
-
   methods: {
     hide(animate) {
       const self = this;
-      if (!self.$f7) return;
+      if (!self.$f7)
+        return;
       self.$f7.toolbar.hide(this.$refs.el, animate);
     },
-
     show(animate) {
       const self = this;
-      if (!self.$f7) return;
+      if (!self.$f7)
+        return;
       self.$f7.toolbar.show(this.$refs.el, animate);
     }
-
   },
   computed: {
     props() {
       return __vueComponentProps(this);
     }
-
   }
 };

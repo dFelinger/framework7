@@ -4,8 +4,11 @@ import __vueComponentDispatchEvent from '../runtime-helpers/vue-component-dispat
 import __vueComponentProps from '../runtime-helpers/vue-component-props.js';
 export default {
   name: 'f7-block',
-  props: Object.assign({
-    id: [String, Number],
+  props: {
+    id: [
+      String,
+      Number
+    ],
     inset: Boolean,
     tabletInset: Boolean,
     strong: Boolean,
@@ -15,44 +18,30 @@ export default {
     accordionList: Boolean,
     noHairlines: Boolean,
     noHairlinesMd: Boolean,
-    noHairlinesIos: Boolean
-  }, Mixins.colorProps),
-
+    noHairlinesIos: Boolean,
+    ...Mixins.colorProps
+  },
   mounted() {
     const el = this.$refs.el;
-    if (!el) return;
+    if (!el)
+      return;
     this.onTabShowBound = this.onTabShow.bind(this);
     this.onTabHideBound = this.onTabHide.bind(this);
     el.addEventListener('tab:show', this.onTabShowBound);
     el.addEventListener('tab:hide', this.onTabHideBound);
   },
-
   beforeDestroy() {
     const el = this.$refs.el;
-    if (!el) return;
+    if (!el)
+      return;
     el.removeEventListener('tab:show', this.onTabShowBound);
     el.removeEventListener('tab:hide', this.onTabHideBound);
   },
-
   render() {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {
-      className,
-      inset,
-      strong,
-      accordionList,
-      tabletInset,
-      tabs,
-      tab,
-      tabActive,
-      noHairlines,
-      noHairlinesIos,
-      noHairlinesMd,
-      id,
-      style
-    } = props;
+    const {className, inset, strong, accordionList, tabletInset, tabs, tab, tabActive, noHairlines, noHairlinesIos, noHairlinesMd, id, style} = props;
     const classes = Utils.classNames(className, 'block', {
       inset,
       'block-strong': strong,
@@ -69,30 +58,23 @@ export default {
       style: style,
       class: classes,
       ref: 'el',
-      attrs: {
-        id: id
-      }
+      attrs: { id: id }
     }, [this.$slots['default']]);
   },
-
   methods: {
     onTabShow(event) {
       this.dispatchEvent('tabShow tab:show', event);
     },
-
     onTabHide(event) {
       this.dispatchEvent('tabHide tab:hide', event);
     },
-
     dispatchEvent(events, ...args) {
       __vueComponentDispatchEvent(this, events, ...args);
     }
-
   },
   computed: {
     props() {
       return __vueComponentProps(this);
     }
-
   }
 };

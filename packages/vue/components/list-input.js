@@ -51,6 +51,7 @@ export default {
       String,
       Number
     ],
+    inputmode: [String],
     autocomplete: [String],
     autocorrect: [String],
     autocapitalize: [String],
@@ -142,6 +143,7 @@ export default {
       inputId,
       size,
       accept,
+      inputmode,
       autocomplete,
       autocorrect,
       autocapitalize,
@@ -221,6 +223,7 @@ export default {
             id: inputId,
             size: size,
             accept: accept,
+            inputmode: inputmode,
             autocomplete: autocomplete,
             autocorrect: autocorrect,
             autocapitalize: autocapitalize,

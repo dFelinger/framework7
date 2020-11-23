@@ -37,6 +37,7 @@ export default {
       String,
       Number
     ],
+    inputmode: [String],
     autocomplete: [String],
     autocorrect: [String],
     autocapitalize: [String],
@@ -109,7 +110,7 @@ export default {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, errorMessageForce, info, wrap, style, className, noStoreData, noFormStoreData, ignoreStoreData} = props;
+    const {type, name, value, defaultValue, placeholder, id, inputId, size, accept, inputmode, autocomplete, autocorrect, autocapitalize, spellcheck, autofocus, autosave, checked, disabled, max, min, step, maxlength, minlength, multiple, readonly, required, inputStyle, pattern, validate, tabindex, resizable, clearButton, errorMessage, errorMessageForce, info, wrap, style, className, noStoreData, noFormStoreData, ignoreStoreData} = props;
     const domValue = self.domValue();
     const inputHasValue = self.inputHasValue();
     let inputEl;
@@ -162,6 +163,7 @@ export default {
             id: inputId,
             size: size,
             accept: accept,
+            inputmode: inputmode,
             autocomplete: autocomplete,
             autocorrect: autocorrect,
             autocapitalize: autocapitalize,

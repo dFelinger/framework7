@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 22, 2020
+ * Released on: November 23, 2020
  */
 
 (function (global, factory) {
@@ -2844,6 +2844,7 @@
         String,
         Number
       ],
+      inputmode: [String],
       autocomplete: [String],
       autocorrect: [String],
       autocapitalize: [String],
@@ -2924,6 +2925,7 @@
       var inputId = props.inputId;
       var size = props.size;
       var accept = props.accept;
+      var inputmode = props.inputmode;
       var autocomplete = props.autocomplete;
       var autocorrect = props.autocorrect;
       var autocapitalize = props.autocapitalize;
@@ -3005,6 +3007,7 @@
               id: inputId,
               size: size,
               accept: accept,
+              inputmode: inputmode,
               autocomplete: autocomplete,
               autocorrect: autocorrect,
               autocapitalize: autocapitalize,
@@ -3877,6 +3880,7 @@
         String,
         Number
       ],
+      inputmode: [String],
       autocomplete: [String],
       autocorrect: [String],
       autocapitalize: [String],
@@ -3968,6 +3972,7 @@
       var inputId = props.inputId;
       var size = props.size;
       var accept = props.accept;
+      var inputmode = props.inputmode;
       var autocomplete = props.autocomplete;
       var autocorrect = props.autocorrect;
       var autocapitalize = props.autocapitalize;
@@ -4044,6 +4049,7 @@
               id: inputId,
               size: size,
               accept: accept,
+              inputmode: inputmode,
               autocomplete: autocomplete,
               autocorrect: autocorrect,
               autocapitalize: autocapitalize,
@@ -10389,7 +10395,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 22, 2020
+   * Released on: November 23, 2020
    */
 
   var Plugin = {

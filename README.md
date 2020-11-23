@@ -10,6 +10,7 @@ Full Featured Mobile HTML Framework For Building iOS & Android Apps
   * Popup - add swipe-to-close feature like in 4.4.0 in commit fd988b909846dd2f8b9205e669fb8b3f37b7d927
   * Smart select sheet enable backdrop
   * Fix smart select data-option-color
+  * f7-input, f7-list-input support for native inputmode attribute
 
 ## Supporting Framework7
 

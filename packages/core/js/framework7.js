@@ -3,11 +3,11 @@
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2020 Vladimir Kharlampidi
+ * Copyright 2014-2021 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: November 23, 2020
+ * Released on: February 8, 2021
  */
 
 (function (global, factory) {
@@ -19585,7 +19585,6 @@
       var sheetParams = {
         content: sheetHtml,
         backdrop: true,
-        scrollToEl: ss.$el,
         closeByOutsideClick: true,
         on: {
           sheetOpen: function sheetOpen(sheet) {

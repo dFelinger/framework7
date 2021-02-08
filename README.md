@@ -11,6 +11,7 @@ Full Featured Mobile HTML Framework For Building iOS & Android Apps
   * Smart select sheet enable backdrop
   * Fix smart select data-option-color
   * f7-input, f7-list-input support for native inputmode attribute
+  * No scroll to smart-select element on sheet open
 
 ## Supporting Framework7
 

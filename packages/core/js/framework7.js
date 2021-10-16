@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2021
+ * Released on: October 16, 2021
  */
 
 (function (global, factory) {
@@ -24139,7 +24139,7 @@
           foundItems = sb.virtualList.params.searchAll(vlQuery, sb.virtualList.items) || [];
         } else if (sb.virtualList.params.searchByItem) {
           for (var i = 0; i < sb.virtualList.items.length; i += 1) {
-            if (sb.virtualList.params.searchByItem(vlQuery, sb.virtualList.params.items[i], i)) {
+            if (sb.virtualList.params.searchByItem(vlQuery, sb.virtualList.items[i], i)) {
               foundItems.push(i);
             }
           }

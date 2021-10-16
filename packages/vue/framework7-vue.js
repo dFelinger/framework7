@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: February 8, 2021
+ * Released on: October 16, 2021
  */
 
 (function (global, factory) {
@@ -10395,7 +10395,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: February 8, 2021
+   * Released on: October 16, 2021
    */
 
   var Plugin = {

@@ -360,34 +360,23 @@ class Stepper extends Framework7Class {
   typeValue(value) {
     const stepper = this;
     stepper.typeModeChanged = true;
-    let inputTxt = String(value);
-    if (inputTxt.lastIndexOf('.') + 1 === inputTxt.length || inputTxt.lastIndexOf(',') + 1 === inputTxt.length) {
-      if (inputTxt.lastIndexOf('.') !== inputTxt.indexOf('.') || inputTxt.lastIndexOf(',') !== inputTxt.indexOf(',')) {
-        inputTxt = inputTxt.slice(0, -1);
-        stepper.value = inputTxt;
-        stepper.$inputEl.val(stepper.value);
-        return stepper;
-      }
-    } else {
-      let newValue = parseFloat(inputTxt.replace(',', '.'));
-      if (newValue === 0) {
-        stepper.value = inputTxt.replace(',', '.');
-        stepper.$inputEl.val(stepper.value);
-        return stepper;
-      }
-      if (Number.isNaN(newValue)) {
-        stepper.value = 0;
-        stepper.$inputEl.val(stepper.value);
-        return stepper;
-      }
-      const powVal = 10 ** stepper.params.decimalPoint;
-      newValue = (Math.round((newValue) * powVal)).toFixed(stepper.params.decimalPoint + 1) / powVal;
-      stepper.value = parseFloat(String(newValue).replace(',', '.'));
-      stepper.$inputEl.val(stepper.value);
-      return stepper;
-    }
-    stepper.value = inputTxt;
-    stepper.$inputEl.val(inputTxt);
+
+    let str = value
+      .toString()
+      .replace(/[^\d,.]/g, '') // remove non digit characters except dot and comma
+      .replace(/,/g, '.') // replace comma for dot
+      .replace(/(\.)(?=.*\1)/g, ''); // remove duplicated dots
+
+    if (str.length === 1 && str === '.') str = '0.';
+
+    const parts = str.split('.');
+
+    if (parts[0] && parts[0].length > 1 && str[0] === '0') str = str.slice(1);
+    if (parts[1] && parts[1].length > stepper.params.decimalPoint) str = str.slice(0, -1);
+
+    stepper.value = str;
+    stepper.$inputEl.val(stepper.value);
+
     return stepper;
   }
 

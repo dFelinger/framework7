@@ -3,11 +3,11 @@
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2021 Vladimir Kharlampidi
+ * Copyright 2014-2022 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: October 16, 2021
+ * Released on: May 21, 2022
  */
 
 (function (global, factory) {
@@ -18935,34 +18935,23 @@
     Stepper.prototype.typeValue = function typeValue (value) {
       var stepper = this;
       stepper.typeModeChanged = true;
-      var inputTxt = String(value);
-      if (inputTxt.lastIndexOf('.') + 1 === inputTxt.length || inputTxt.lastIndexOf(',') + 1 === inputTxt.length) {
-        if (inputTxt.lastIndexOf('.') !== inputTxt.indexOf('.') || inputTxt.lastIndexOf(',') !== inputTxt.indexOf(',')) {
-          inputTxt = inputTxt.slice(0, -1);
-          stepper.value = inputTxt;
-          stepper.$inputEl.val(stepper.value);
-          return stepper;
-        }
-      } else {
-        var newValue = parseFloat(inputTxt.replace(',', '.'));
-        if (newValue === 0) {
-          stepper.value = inputTxt.replace(',', '.');
-          stepper.$inputEl.val(stepper.value);
-          return stepper;
-        }
-        if (Number.isNaN(newValue)) {
-          stepper.value = 0;
-          stepper.$inputEl.val(stepper.value);
-          return stepper;
-        }
-        var powVal = Math.pow( 10, stepper.params.decimalPoint );
-        newValue = (Math.round((newValue) * powVal)).toFixed(stepper.params.decimalPoint + 1) / powVal;
-        stepper.value = parseFloat(String(newValue).replace(',', '.'));
-        stepper.$inputEl.val(stepper.value);
-        return stepper;
-      }
-      stepper.value = inputTxt;
-      stepper.$inputEl.val(inputTxt);
+
+      var str = value
+        .toString()
+        .replace(/[^\d,.]/g, '') // remove non digit characters except dot and comma
+        .replace(/,/g, '.') // replace comma for dot
+        .replace(/(\.)(?=.*\1)/g, ''); // remove duplicated dots
+
+      if (str.length === 1 && str === '.') { str = '0.'; }
+
+      var parts = str.split('.');
+
+      if (parts[0] && parts[0].length > 1 && str[0] === '0') { str = str.slice(1); }
+      if (parts[1] && parts[1].length > stepper.params.decimalPoint) { str = str.slice(0, -1); }
+
+      stepper.value = str;
+      stepper.$inputEl.val(stepper.value);
+
       return stepper;
     };
 

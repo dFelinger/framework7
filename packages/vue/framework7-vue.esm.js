@@ -3,11 +3,11 @@
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
- * Copyright 2014-2021 Vladimir Kharlampidi
+ * Copyright 2014-2022 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: October 16, 2021
+ * Released on: May 17, 2022
  */
 
 import f7AccordionContent from './components/accordion-content';

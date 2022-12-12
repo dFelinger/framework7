@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: May 21, 2022
+ * Released on: December 12, 2022
  */
 
 (function (global, factory) {
@@ -19181,7 +19181,7 @@
         }
 
         ss.$selectEl.trigger('change');
-        ss.$valueEl.text(optionText.join(', '));
+        ss.$valueEl.html(ss.renderValue(optionText));
         if (ss.params.closeOnSelect && ss.inputType === 'radio') {
           ss.close();
         }
@@ -19258,7 +19258,7 @@
           }
         });
       }
-      ss.$valueEl.text(valueArray.join(', '));
+      ss.$valueEl.html(ss.renderValue(valueArray));
     };
 
     SmartSelect.prototype.getItemsData = function getItemsData () {
@@ -19377,6 +19377,13 @@
       var cssClass = ss.params.cssClass;
       var popoverHtml = "\n      <div class=\"popover smart-select-popover " + cssClass + "\" data-select-name=\"" + (ss.selectName) + "\">\n        <div class=\"popover-inner\">\n          <div class=\"list smart-select-list-" + (ss.id) + " " + (ss.params.virtualList ? ' virtual-list' : '') + " " + (ss.params.formColorTheme ? ("color-theme-" + (ss.params.formColorTheme)) : '') + "\">\n            <ul>" + (!ss.params.virtualList && ss.renderItems(ss.items)) + "</ul>\n          </div>\n        </div>\n      </div>\n    ";
       return popoverHtml;
+    };
+
+    SmartSelect.prototype.renderValue = function renderValue (valueArray) {
+      var ss = this;
+      if (ss.params.renderValue) { return ss.params.renderValue.call(ss, valueArray); }
+
+      return valueArray.join(', ');
     };
 
     SmartSelect.prototype.onOpen = function onOpen (type, containerEl) {
@@ -19725,6 +19732,7 @@
         renderItems: undefined,
         renderItem: undefined,
         renderSearchbar: undefined,
+        renderValue: undefined,
       },
     },
     static: {

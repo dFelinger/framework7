@@ -13,6 +13,7 @@ Full Featured Mobile HTML Framework For Building iOS & Android Apps
   * f7-input, f7-list-input support for native inputmode attribute
   * No scroll to smart-select element on sheet open
   * Issue 3948 fix - item param is undefined in Virtual List searchByItem function after replaceAllItems call
+  * Smart select renderValue param
 
 ## Supporting Framework7
 

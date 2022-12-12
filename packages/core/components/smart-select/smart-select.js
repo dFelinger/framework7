@@ -36,6 +36,7 @@ export default {
       renderItems: undefined,
       renderItem: undefined,
       renderSearchbar: undefined,
+      renderValue: undefined,
     },
   },
   static: {

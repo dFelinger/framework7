@@ -119,7 +119,7 @@ class SmartSelect extends Framework7Class {
       }
 
       ss.$selectEl.trigger('change');
-      ss.$valueEl.text(optionText.join(', '));
+      ss.$valueEl.html(ss.renderValue(optionText));
       if (ss.params.closeOnSelect && ss.inputType === 'radio') {
         ss.close();
       }
@@ -192,7 +192,7 @@ class SmartSelect extends Framework7Class {
         }
       });
     }
-    ss.$valueEl.text(valueArray.join(', '));
+    ss.$valueEl.html(ss.renderValue(valueArray));
   }
 
   getItemsData() {
@@ -412,6 +412,13 @@ class SmartSelect extends Framework7Class {
       </div>
     `;
     return popoverHtml;
+  }
+
+  renderValue(valueArray) {
+    const ss = this;
+    if (ss.params.renderValue) return ss.params.renderValue.call(ss, valueArray);
+
+    return valueArray.join(', ');
   }
 
   onOpen(type, containerEl) {

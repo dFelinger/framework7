@@ -14,6 +14,7 @@ Full Featured Mobile HTML Framework For Building iOS & Android Apps
   * No scroll to smart-select element on sheet open
   * Issue 3948 fix - item param is undefined in Virtual List searchByItem function after replaceAllItems call
   * Smart select renderValue param
+  * Swipeout use other than a tag for swipeout-actions button
 
 ## Supporting Framework7
 

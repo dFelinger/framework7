@@ -63,12 +63,12 @@ const Swipeout = {
         $overswipeLeftButton = null;
         if ($actionsLeft.length > 0) {
           actionsLeftWidth = $actionsLeft.outerWidth();
-          $leftButtons = $actionsLeft.children('a');
+          $leftButtons = $actionsLeft.children();
           $overswipeLeftButton = $actionsLeft.find('.swipeout-overswipe');
         }
         if ($actionsRight.length > 0) {
           actionsRightWidth = $actionsRight.outerWidth();
-          $rightButtons = $actionsRight.children('a');
+          $rightButtons = $actionsRight.children();
           $overswipeRightButton = $actionsRight.find('.swipeout-overswipe');
         }
         opened = $swipeoutEl.hasClass('swipeout-opened');
@@ -375,7 +375,7 @@ const Swipeout = {
     $el.trigger('swipeout:open').addClass('swipeout-opened').removeClass('swipeout-transitioning');
     app.emit('swipeoutOpen', $el[0]);
     $swipeoutActions.addClass('swipeout-actions-opened');
-    const $buttons = $swipeoutActions.children('a');
+    const $buttons = $swipeoutActions.children();
     const swipeoutActionsWidth = $swipeoutActions.outerWidth();
     const translate = side === 'right' ? -swipeoutActionsWidth : swipeoutActionsWidth;
     if ($buttons.length > 1) {
@@ -407,7 +407,7 @@ const Swipeout = {
     if (!$el.hasClass('swipeout-opened')) return;
     const side = $el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
     const $swipeoutActions = $el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
-    const $buttons = $swipeoutActions.children('a');
+    const $buttons = $swipeoutActions.children();
     const swipeoutActionsWidth = $swipeoutActions.outerWidth();
     Swipeout.allow = false;
     $el.trigger('swipeout:close');

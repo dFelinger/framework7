@@ -3,11 +3,11 @@
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2022 Vladimir Kharlampidi
+ * Copyright 2014-2023 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: December 12, 2022
+ * Released on: March 22, 2023
  */
 
 (function (global, factory) {
@@ -14454,12 +14454,12 @@
           $overswipeLeftButton = null;
           if ($actionsLeft.length > 0) {
             actionsLeftWidth = $actionsLeft.outerWidth();
-            $leftButtons = $actionsLeft.children('a');
+            $leftButtons = $actionsLeft.children();
             $overswipeLeftButton = $actionsLeft.find('.swipeout-overswipe');
           }
           if ($actionsRight.length > 0) {
             actionsRightWidth = $actionsRight.outerWidth();
-            $rightButtons = $actionsRight.children('a');
+            $rightButtons = $actionsRight.children();
             $overswipeRightButton = $actionsRight.find('.swipeout-overswipe');
           }
           opened = $swipeoutEl.hasClass('swipeout-opened');
@@ -14772,7 +14772,7 @@
       $el.trigger('swipeout:open').addClass('swipeout-opened').removeClass('swipeout-transitioning');
       app.emit('swipeoutOpen', $el[0]);
       $swipeoutActions.addClass('swipeout-actions-opened');
-      var $buttons = $swipeoutActions.children('a');
+      var $buttons = $swipeoutActions.children();
       var swipeoutActionsWidth = $swipeoutActions.outerWidth();
       var translate = side === 'right' ? -swipeoutActionsWidth : swipeoutActionsWidth;
       if ($buttons.length > 1) {
@@ -14804,7 +14804,7 @@
       if (!$el.hasClass('swipeout-opened')) { return; }
       var side = $el.find('.swipeout-actions-opened').hasClass('swipeout-actions-right') ? 'right' : 'left';
       var $swipeoutActions = $el.find('.swipeout-actions-opened').removeClass('swipeout-actions-opened');
-      var $buttons = $swipeoutActions.children('a');
+      var $buttons = $swipeoutActions.children();
       var swipeoutActionsWidth = $swipeoutActions.outerWidth();
       Swipeout.allow = false;
       $el.trigger('swipeout:close');

@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: March 24, 2024
+ * Released on: May 16, 2024
  */
 
 (function (global, factory) {
@@ -11932,7 +11932,9 @@
         app.root.append($el);
         modal.once((type + "Closed"), function () {
           if (wasInDom) {
-            $modalParentEl.append($el);
+            setTimeout(function () {
+              $modalParentEl.append($el);
+            });
           } else {
             $el.remove();
           }

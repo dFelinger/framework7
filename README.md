@@ -15,6 +15,7 @@ Full Featured Mobile HTML Framework For Building iOS & Android Apps
   * Issue 3948 fix - item param is undefined in Virtual List searchByItem function after replaceAllItems call
   * Smart select renderValue param
   * Swipeout use other than a tag for swipeout-actions button
+  * Fix modal safari issue on close when element becomes visible on move to previous place in the dom #4260
 
 ## Supporting Framework7
 

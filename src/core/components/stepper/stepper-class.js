@@ -223,6 +223,11 @@ class Stepper extends Framework7Class {
         stepper.endTypeMode();
       }
     }
+    function onInputFocus() {
+      if (stepper.params.manualInputMode) {
+        manualInput = true;
+      }
+    }
     function onInputBlur() {
       manualInput = false;
       stepper.endTypeMode(true);
@@ -241,6 +246,7 @@ class Stepper extends Framework7Class {
       if (stepper.params.watchInput && $inputEl && $inputEl.length) {
         $inputEl.on('input', onInput);
         $inputEl.on('click', onInputClick);
+        $inputEl.on('focus', onInputFocus);
         $inputEl.on('blur', onInputBlur);
         $inputEl.on('keyup', onInputKey);
       }
@@ -256,6 +262,7 @@ class Stepper extends Framework7Class {
       if (stepper.params.watchInput && $inputEl && $inputEl.length) {
         $inputEl.off('input', onInput);
         $inputEl.off('click', onInputClick);
+        $inputEl.off('focus', onInputFocus);
         $inputEl.off('blur', onInputBlur);
         $inputEl.off('keyup', onInputKey);
       }

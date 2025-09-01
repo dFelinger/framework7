@@ -3,11 +3,11 @@
  * Build full featured iOS & Android apps using Framework7 & Vue
  * http://framework7.io/vue/
  *
- * Copyright 2014-2024 Vladimir Kharlampidi
+ * Copyright 2014-2025 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: May 16, 2024
+ * Released on: September 1, 2025
  */
 
 (function (global, factory) {
@@ -10391,11 +10391,11 @@
    * Build full featured iOS & Android apps using Framework7 & Vue
    * http://framework7.io/vue/
    *
-   * Copyright 2014-2024 Vladimir Kharlampidi
+   * Copyright 2014-2025 Vladimir Kharlampidi
    *
    * Released under the MIT License
    *
-   * Released on: May 16, 2024
+   * Released on: September 1, 2025
    */
 
   var Plugin = {

@@ -3,11 +3,11 @@
  * Full featured mobile HTML framework for building iOS & Android apps
  * http://framework7.io/
  *
- * Copyright 2014-2024 Vladimir Kharlampidi
+ * Copyright 2014-2025 Vladimir Kharlampidi
  *
  * Released under the MIT License
  *
- * Released on: May 16, 2024
+ * Released on: September 1, 2025
  */
 
 (function (global, factory) {
@@ -18793,6 +18793,11 @@
           stepper.endTypeMode();
         }
       }
+      function onInputFocus() {
+        if (stepper.params.manualInputMode) {
+          manualInput = true;
+        }
+      }
       function onInputBlur() {
         manualInput = false;
         stepper.endTypeMode(true);
@@ -18811,6 +18816,7 @@
         if (stepper.params.watchInput && $inputEl && $inputEl.length) {
           $inputEl.on('input', onInput);
           $inputEl.on('click', onInputClick);
+          $inputEl.on('focus', onInputFocus);
           $inputEl.on('blur', onInputBlur);
           $inputEl.on('keyup', onInputKey);
         }
@@ -18826,6 +18832,7 @@
         if (stepper.params.watchInput && $inputEl && $inputEl.length) {
           $inputEl.off('input', onInput);
           $inputEl.off('click', onInputClick);
+          $inputEl.off('focus', onInputFocus);
           $inputEl.off('blur', onInputBlur);
           $inputEl.off('keyup', onInputKey);
         }

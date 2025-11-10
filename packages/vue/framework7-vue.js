@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: September 1, 2025
+ * Released on: November 10, 2025
  */
 
 (function (global, factory) {
@@ -9103,6 +9103,14 @@
         type: Boolean,
         default: false
       },
+      inputInputmode: {
+        type: String,
+        default: ''
+      },
+      inputPattern: {
+        type: String,
+        default: ''
+      },
       autorepeat: {
         type: Boolean,
         default: false
@@ -9152,6 +9160,8 @@
       var inputType = props.inputType;
       var value = props.value;
       var inputReadonly = props.inputReadonly;
+      var inputInputmode = props.inputInputmode;
+      var inputPattern = props.inputPattern;
       var min = props.min;
       var max = props.max;
       var step = props.step;
@@ -9166,6 +9176,8 @@
             ref: 'inputEl',
             domProps: {
               readOnly: inputReadonly,
+              inputMode: inputInputmode,
+              pattern: inputPattern,
               value: value
             },
             on: { input: self.onInput },
@@ -10395,7 +10407,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: September 1, 2025
+   * Released on: November 10, 2025
    */
 
   var Plugin = {

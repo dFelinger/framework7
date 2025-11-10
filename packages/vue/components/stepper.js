@@ -42,6 +42,14 @@ export default {
       type: Boolean,
       default: false
     },
+    inputInputmode: {
+      type: String,
+      default: ''
+    },
+    inputPattern: {
+      type: String,
+      default: ''
+    },
     autorepeat: {
       type: Boolean,
       default: false
@@ -87,7 +95,7 @@ export default {
     const _h = this.$createElement;
     const self = this;
     const props = self.props;
-    const {input, buttonsOnly, inputType, value, inputReadonly, min, max, step, id, style} = props;
+    const {input, buttonsOnly, inputType, value, inputReadonly, inputInputmode, inputPattern, min, max, step, id, style} = props;
     let inputWrapEl;
     let valueEl;
     if (input && !buttonsOnly) {
@@ -97,6 +105,8 @@ export default {
           ref: 'inputEl',
           domProps: {
             readOnly: inputReadonly,
+            inputMode: inputInputmode,
+            pattern: inputPattern,
             value
           },
           on: { input: self.onInput },

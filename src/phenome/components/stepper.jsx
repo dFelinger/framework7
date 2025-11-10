@@ -48,6 +48,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    inputInputmode: {
+      type: String,
+      default: '',
+    },
+    inputPattern: {
+      type: String,
+      default: '',
+    },
     autorepeat: {
       type: Boolean,
       default: false,
@@ -94,7 +102,7 @@ export default {
     const self = this;
     const props = self.props;
     const {
-      input, buttonsOnly, inputType, value, inputReadonly, min, max, step, id, style,
+      input, buttonsOnly, inputType, value, inputReadonly, inputInputmode, inputPattern, min, max, step, id, style,
     } = props;
 
     let inputWrapEl;
@@ -112,6 +120,8 @@ export default {
             onInput={self.onInput}
             value={value}
             readOnly={inputReadonly}
+            inputMode={inputInputmode}
+            pattern={inputPattern}
           />
         );
       }
@@ -126,6 +136,8 @@ export default {
             onInput={self.onInput}
             domProps={{
               readOnly: inputReadonly,
+              inputMode: inputInputmode,
+              pattern: inputPattern,
               value,
             }}
           />

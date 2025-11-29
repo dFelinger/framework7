@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 10, 2025
+ * Released on: November 29, 2025
  */
 html,
 body,
@@ -28485,6 +28485,9 @@ html.with-statusbar.device-iphone-x .notification {
 .ios .searchbar-input-wrap .autocomplete-dropdown .autocomplete-dropdown-placeholder {
   color: #939398;
 }
+.ios .autocomplete-dropdown-selected {
+  background: rgba(0, 122, 255, 0.2);
+}
 .ios .theme-dark .autocomplete-dropdown {
   background-color: #1c1c1d;
 }
@@ -28523,6 +28526,9 @@ html.with-statusbar.device-iphone-x .notification {
 }
 .md .searchbar-input-wrap .autocomplete-dropdown .autocomplete-dropdown-placeholder {
   color: #939398;
+}
+.md .autocomplete-dropdown-selected {
+  background: rgba(33, 150, 243, 0.2);
 }
 /* === Tooltip === */
 .tooltip {

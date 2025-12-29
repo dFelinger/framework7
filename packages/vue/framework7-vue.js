@@ -7,7 +7,7 @@
  *
  * Released under the MIT License
  *
- * Released on: November 29, 2025
+ * Released on: December 29, 2025
  */
 
 (function (global, factory) {
@@ -10407,7 +10407,7 @@
    *
    * Released under the MIT License
    *
-   * Released on: November 29, 2025
+   * Released on: December 29, 2025
    */
 
   var Plugin = {
